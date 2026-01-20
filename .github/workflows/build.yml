@@ -130,10 +130,17 @@ jobs:
           ⏱ *Time:* ${BUILD_TIME}s
           🔐 *MD5:* \`${MD5_CHECKSUM}\`"
           curl -s -F chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-            -F document=@out/arch/arm64/boot/Image.gz-dtb \
+            -F document=@out/arch/arm64/boot/Image.gz \
             -F caption="$CAPTION" \
             -F parse_mode=Markdown \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
+
+      - name: Send build artifacts to Telegram
+        if: success()
+        run: |
+          curl -s -F document=@out/arch/arm64/boot/dts/mediatek/"${DEFCONFIG}.dtb" \
+            "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument?chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F caption="DTB"
 
       - name: Send build artifacts to Telegram
         if: success()
