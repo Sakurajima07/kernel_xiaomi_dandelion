@@ -105,8 +105,9 @@ jobs:
         run: |
           mkdir -p out/kernel-modules
           find out -name '*.ko' -print0 \
-           | tee >(xargs -0 cp -v -t out/kernel-modules) \
-           | xargs -0 zip out/kernel-modules/kernel-modules.zip
+            | xargs -0 cp -v -t out/kernel-modules
+          cd out/kernel-modules
+          zip -j kernel-modules.zip *.ko
 
       - name: Upload modiles zip as artifact
         if: success()
