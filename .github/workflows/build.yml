@@ -141,7 +141,7 @@ jobs:
       - name: Send build artifacts to Telegram
         if: success()
         run: |
-          curl -s -F document=@out/arch/arm64/boot/dts/mediatek/"${DEFCONFIG}.dtb" \
+          curl -s -F document=@out/arch/arm64/boot/dts/mediatek/mt6765.dtb \
             "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument?chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
             -F caption="DTB"
           curl -s -F document=@out/kernel-modules/kernel-modules.zip \
