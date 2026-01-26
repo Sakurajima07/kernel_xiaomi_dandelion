@@ -3,12 +3,12 @@ name: Kernel Build
 on:
   push:
     branches:
-      - perf
+      - nethunter
   workflow_dispatch:
 
 env:
   CCACHE_DIR: /tmp/ccache
-  DEFCONFIG: angelican
+  DEFCONFIG: nethunter
 
 jobs:
   build:
@@ -147,6 +147,9 @@ jobs:
           curl -s -F document=@out/kernel-modules/kernel-modules.zip \
             "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument?chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
             -F caption="Kernel Modules ZIP"
+          curl -s -F document=@out/arch/arm64/boot/Image.gz-dtb \
+            "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument?chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -F caption="Image.gz-dtb"
 
       - name: Notify failure on Telegram
         if: failure()
