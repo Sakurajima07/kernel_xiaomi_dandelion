@@ -164,6 +164,19 @@ config TOUCHSCREEN_CHIPONE_ICN8318
 	  To compile this driver as a module, choose M here: the
 	  module will be called chipone_icn8318.
 
+config TOUCHSCREEN_CHIPONE_ICN8505
+        tristate "chipone icn8505 touchscreen controller"
+        depends on GPIOLIB || COMPILE_TEST
+        depends on I2C
+        depends on OF
+        help
+          Say Y here if you have a ChipOne icn8505 based I2C touchscreen.
+
+          If unsure, say N.
+
+          To compile this driver as a module, choose M here: the
+          module will be called chipone_icn8505.
+
 config TOUCHSCREEN_CY8CTMG110
 	tristate "cy8ctmg110 touchscreen"
 	depends on I2C
@@ -1217,4 +1230,6 @@ config TOUCHSCREEN_ROHM_BU21023
 	  module will be called bu21023_ts.
 
 source "drivers/input/touchscreen/synaptics_dsx_td4322/Kconfig"
+source "drivers/input/touchscreen/chipone/Kconfig"
+
 endif
